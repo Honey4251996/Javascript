@@ -1,0 +1,138 @@
+
+<!-- 2019.6.20 First Task -->
+<!-- Project Description
+I have a javascript that can be added into any webpage that will allow to click an Add button and it adds another browse field for file uploads. It works great but there is no way to remove any extra fields it places on the page.
+
+My requirements are:
+
+1. Add a remove option beside any new generated fields
+
+2. Have the ability to set the maximum number of fields that can be added to the page
+
+I have attached the script and it contains all the head and body code only -->
+<!-- $20 in 1 day Australia -->
+<!-- --------- HEAD CODE ---------------- -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" >
+
+// Auto attachment fields for Antenna Web Design Studio
+
+var DefaultName = "attachment1";
+var RemoveDefaultName = "remove1";
+var DefaultNameIncrementNumber = 1;
+
+var countofEle = 1;
+
+// No further customizations required.
+function AddFormField(id,name,value,tag) {
+	defaultCount = parseInt(document.getElementById('defaultCount').value);
+	if ( countofEle >= defaultCount) {
+		alert("Max count of elements are " + countofEle + ", Out of limitation!");
+		return;
+	}
+
+	// if(!document.getElementById && document.createElement) {
+	// 	 return;
+	// }
+
+	var addmore = document.getElementById(id);
+	var formfield = document.createElement("input");
+	var removeformfield = document.createElement("input");
+	// var removeformfield = document.createElement("input");
+
+	if(name.length < 1) {
+	   DefaultNameIncrementNumber++;
+	   name = String(DefaultName + DefaultNameIncrementNumber);
+	   removename = String(RemoveDefaultName + DefaultNameIncrementNumber);
+   	}
+
+   	// choose file
+	formfield.name = name;
+	formfield.type = "file";
+	formfield.value = value;
+
+	// remove button
+	removeformfield.name = removename;
+	removeformfield.type = "button";
+	// removeformfield.className = "btn";
+
+	// create i element
+	// var ifield = document.createElement("i");
+	// ifield.className = "fa fa-trash";
+	// removeformfield.appendChild(ifield);
+
+	// removeformfield.value = "Remove";
+	// removeformfield.style.borderColor = "black";
+ // 	removeformfield.style.backgroundColor = "red";
+ // 	removeformfield.style.borderRadius = '10em';
+
+ 	removeformfield.style.backgroundImage = "url('trash1.png')";
+ 	// removeformfield.setAttribute("style", "background-image: url('trash1.png');background-repeat: no-repeat; width:50px; height:50px;");
+ 	removeformfield.setAttribute("style", "background-image: url('trash1.png');background-repeat: no-repeat; background-size: cover; padding-right:10px;");
+
+	removeformfield.onclick = function () {
+	    this.parentElement.parentElement.removeChild(this.parentElement);
+	    countofEle--;
+	};
+ 
+	if(tag.length > 0) {
+	   var thetag = document.createElement(tag);
+	   thetag.id = removename;
+	   thetag.appendChild(formfield);	// add input file button
+	   thetag.appendChild(removeformfield); // add remove button	   
+	   addmore.appendChild(thetag);	   
+	   countofEle++;
+   	} else {
+   		addmore.appendChild(formfield);
+   		countofEle++;
+ 	}
+} // function AddFormField()
+
+// Remove Attachments
+
+function clearFileInputField(tagId) {
+    document.getElementById(tagId).innerHTML = document.getElementById(tagId).innerHTML;
+}
+
+
+</script>
+
+<!-- --------------- Custom Style --------------------------- -->
+
+<!-- <style type="text/css">
+	div {
+		margin-bottom: 5px;
+	}
+	.btn {
+	  background-color: DodgerBlue;
+	  border: none;
+	  color: white;
+	  padding: 8px 10px;
+	  font-size: 16px;
+	  cursor: pointer;
+	}
+
+	/* Darker background on mouse-over */
+	.btn:hover {
+	  background-color: RoyalBlue;
+	}
+</style> -->
+
+<!-- -----------  BODY CODE BELOW  -------------------------- -->
+
+
+<div id="addmore">
+	<a style="font-size:.8em;" href="javascript:AddFormField('addmore','','','div')">
+		[ + Add ]
+	</a>&nbsp;
+
+	<a style="font-size:.8em;" href="javascript:void(0);" onclick="clearFileInputField('addmore')" >
+		[ - Clear ]
+	</a>
+	
+	<input type="hidden" name="defaultCount" id="defaultCount" value="5">
+	<br><br>
+	<div>
+		<input type="file" name="attachment1" id="myfile">		
+	</div>
+</div>
